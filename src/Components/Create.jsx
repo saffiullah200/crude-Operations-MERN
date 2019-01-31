@@ -1,4 +1,7 @@
+// create.component.js
+
 import React, { Component } from "react";
+import axios from "axios";
 
 export default class Create extends Component {
   constructor(props) {
@@ -10,30 +13,42 @@ export default class Create extends Component {
 
     this.state = {
       person_name: "",
-      business_gst_number: "",
-      business_name: ""
+      business_name: "",
+      business_gst_number: ""
     };
   }
-
   onChangePersonName(e) {
-    this.setState({ person_name: e.target.value });
+    this.setState({
+      person_name: e.target.value
+    });
   }
   onChangeBusinessName(e) {
-    this.setState({ business_name: e.target.vale });
+    this.setState({
+      business_name: e.target.value
+    });
   }
-
   onChangeGstNumber(e) {
     this.setState({
       business_gst_number: e.target.value
     });
   }
+
   onSubmit(e) {
     e.preventDefault();
-    this.setstate = {
-      person_name: "",
-      business_gst_number: "",
-      business_name: ""
+    const obj = {
+      person_name: this.state.person_name,
+      business_name: this.state.business_name,
+      business_gst_number: this.state.business_gst_number
     };
+    axios
+      .post("http://localhost:4000/business/add", obj)
+      .then(res => console.log(res.data));
+
+    this.setState({
+      person_name: "",
+      business_name: "",
+      business_gst_number: ""
+    });
   }
 
   render() {
